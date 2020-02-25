@@ -1,5 +1,7 @@
 
 
+
+
 import 'package:flutter/material.dart';
 import 'package:flutterfirebase/login.dart';
 
@@ -21,6 +23,7 @@ class MyApp extends StatelessWidget {
         initialRoute: '/',
         routes: {
           '/' : (context) => LoginPage(),
+          
         },
       );
     }

@@ -1,5 +1,7 @@
 
 
+
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -59,13 +61,39 @@ class _LoginPageState extends State<LoginPage> {
                   ),
               ),
               RaisedButton(
-                child: Text('Logon'),
-                onPressed: () => {},
+                child: Text('Login'),
+                onPressed: () {
+
+                    if(this._formstage.currentState.validate()){
+                      print('valid');
+                      this._formstage.currentState.save();
+                      this.auth
+                          .signInWithEmailAndPassword(email: this.email,password: this.password)
+                          .then((user)  {
+                            if(user.isEmailVerified){
+                                Scaffold.of(this._formstage.currentContext)
+                                .showSnackBar(SnackBar(content: Text('Login pass')
+
+                                )
+                              );
+                            }else{
+                              Scaffold.of(this._formstage.currentContext)
+                              .showSnackBar(SnackBar(content: Text('Plese verify your email')));
+                            }
+                          }
+                        ).catchError((reason) {
+                          Scaffold.of(this._formstage.currentContext)
+                            .showSnackBar(SnackBar(content: Text("Login or Password invalid"),));
+                        });
+                    }else {print('invalid form');}
+
+
+                },
                 ),
               RaisedButton(
                 child: Text('Resister new account'),
-                onPressed: () => {
-                  print('Go Regis page')
+                onPressed: () {
+                  print('Go Regis page');
                 },
 
               )
